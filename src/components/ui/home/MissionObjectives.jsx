@@ -2,6 +2,8 @@
 import React from 'react'
 import Image from 'next/image'
 import { MissionObject } from '@/constant/images'
+import CustomImage from '../CustomImage'
+
 
 const MissionObjectives = () => {
    const missionData = [
@@ -17,27 +19,40 @@ const MissionObjectives = () => {
          title: "Objective",
          description: "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sed dolor eveniet dolorum nam molestiae provident modi amet accusamus molestias sapiente! Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sed dolor eveniet dolorum nam molestiae provident modi amet accusamus molestias sapiente! Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sed dolor eveniet dolorum nam molestiae provident modi amet accusamus molestias sapiente!Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sed dolor eveniet dolorum nam molestiae provident modi amet accusamus molestias sapiente!Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sed dolor eveniet dolorum nam molestiae provident modi amet accusamus molestias sapiente!Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sed dolor eveniet dolorum nam molestiae provident modi amet accusamus molestias sapiente!"
       },
-
    ]
 
-   const renderMissionAndObjective = missionData?.map((data, index) => {
-      return (
-         <div key={data.title} tabIndex={index} className="collapse collapse-plus rounded-md shadow-lg">
-            <div className="collapse-title text-2xl font-semibold">
-               {data.title}
+   const renderMissionAndObjective =
+      missionData?.map((data, index) => {
+         return (
+            <div key={index} tabIndex={index} className="collapse collapse-plus">
+               <h2 className="collapse-title">
+                  {data.title}
+               </h2>
+               <div className="collapse-content">
+                  <p className=''>{data.description}</p>
+               </div>
             </div>
-            <div className="collapse-content">
-               <p className='text-lg'>{data.description}</p>
-            </div>
-         </div>
-      )
-   })
+         )
+      })
+
    return (
-      <div className='mt-12 bg-white'>
-         <h1 className='text-center text-2xl lg:text-4xl font-semibold py-4 bg-red-500 text-white'>Our Mission & Objectives</h1>
-         <div className='grid lg:grid-cols-2 items-center justify-center py-10'>
+      <div className='mt-4 bg-white text-black p-4 shadow-md'>
+         <h1 className=' '>Our Mission & Objectives</h1>
+         <div className='grid lg:grid-cols-2 items-center justify-center'>
             <div className='flex justify-center py-2'>
-               <Image src={MissionObject} width={400} height={400} alt='mission' className=' hover:animate-pulse ' />
+               {/* <Image
+                  src={MissionObject}
+                  width={400}
+                  height={400}
+                  alt='mission'
+                  quality={50}
+                  className=' hover:animate-pulse '
+               /> */}
+               <CustomImage
+                  src={MissionObject}
+                  alt='mission'
+                  className=' hover:animate-pulse '
+               />
             </div>
             <div className='space-y-10'>
                {renderMissionAndObjective}

@@ -53,13 +53,13 @@ const LoginForm = () => {
               <a href="#" className="text-sm font-medium text-blue-600 hover:underline ">Forgot password ?</a>
             </div>
             <Button
-              text='Logging In'
+              text='Log In'
               className='text-lg w-full bg-blue-900 items-center'
-              loading={true}
+              // loading={true}
             />
-            <p className="text-sm font-light text-gray-900 ">
+            <div className="text-sm font-light text-gray-900 ">
               Don’t have an account yet? <Link href="/register" className="font-medium text-blue-600 hover:underline ">Sign up</Link>
-            </p>
+            </div>
           </form>
         </div>
       </div>

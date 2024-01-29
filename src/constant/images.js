@@ -1,7 +1,12 @@
+'use client'
 export { default as Logo } from "../../public/images/logo.jpg"
+export { default as PngLog } from "../../public/images/logo.png"
 export { default as CarouselOne } from "../../public/images/caroseal-1.jpg"
 export { default as CarouselTwo } from "../../public/images/caroseal-2.jpg"
 export { default as CarouselThree } from "../../public/images/caroseal-3.jpg"
+export { default as CarouselFour } from "../../public/images/caroseal-4.jpg"
+export { default as CarouselFive } from "../../public/images/caroseal-5.jpg"
+export { default as CarouselSix } from "../../public/images/caroseal-6.jpg"
 export { default as MissionObject } from "../../public/images/vision.png"
 export { default as TeamOne } from "../../public/images/team1.jpg"
 export { default as TeamTwo } from "../../public/images/team2.jpg"

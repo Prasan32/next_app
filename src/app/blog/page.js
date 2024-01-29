@@ -1,8 +1,10 @@
+import { AllBlogs, RecentStories } from "@/components"
 
 const BlogPage = () => {
    return (
       <div>
-         Blog Page
+         <AllBlogs />
+         <RecentStories />
       </div>
    )
 }

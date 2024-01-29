@@ -2,6 +2,7 @@
 
 import React from 'react'
 import BlogCard from '../blog/BlogCard'
+import Link from 'next/link'
 
 const TopBlogs = () => {
    return (
@@ -15,7 +16,9 @@ const TopBlogs = () => {
                </div>
             </div>
             <div className="hidden md:block">
-               <button className="px-10 py-2 font-bold border-2 border-black  ">See All</button>
+               <button className="px-10 py-2 font-bold border-2 border-black  ">
+                  <Link href='/blog'>See All</Link>
+               </button>
             </div>
          </div>
          <div className="grid  lg:grid-cols-4  gap-10 ">
@@ -26,7 +29,7 @@ const TopBlogs = () => {
          </div>
          <div className='flex justify-center'>
             <button className=' px-10 py-2 mt-10 font-bold border-2 border-black  md:hidden'>
-               See All
+               <Link href='/blog'>See All</Link>
             </button>
          </div>
       </div>

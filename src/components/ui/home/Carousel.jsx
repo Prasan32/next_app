@@ -1,113 +1,136 @@
 'use client'
-import React, { useState } from 'react'
-// import { CarouselOne, CarouselTwo, CarouselThree } from '@/constant/images'
-import CarouselOne from "../../../../public/images/nepal-slide-1.jpg"
-import CarouselTwo from "../../../../public/images/caroseal-2.jpg"
-import CarouselThree from "../../../../public/images/caroseal-3.jpg"
+import React, { useState, useEffect } from 'react'
 import Image from 'next/image'
-
-const carouselData = [
-   {
-      id: 1,
-      image: CarouselOne,
-      title: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi minima deleniti earum.",
-      des: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi quaerat ut porro cupiditate suscipit blanditiis est harum natus facere aliquam."
-   },
-   {
-      id: 2,
-      image: CarouselTwo,
-      title: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi minima deleniti earum.",
-      des: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi quaerat ut porro cupiditate suscipit blanditiis est harum natus facere aliquam."
-   },
-   {
-      id: 3,
-      image: CarouselThree,
-      title: "Lorem ipsum dolor sit amet consectetur adipisicing elit",
-      des: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi quaerat ut porro cupiditate suscipit blanditiis est harum natus facere aliquam."
-   },
-   {
-      id: 4,
-      image: CarouselOne,
-      title: "Lorem ipsum dolor sit amet consectetur adipisicing elit",
-      des: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi quaerat ut porro cupiditate suscipit blanditiis est harum natus facere aliquam."
-   },
-   {
-      id: 5,
-      image: CarouselTwo,
-      title: "Lorem ipsum dolor sit amet consectetur adipisicing elit",
-      des: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi quaerat ut porro cupiditate suscipit blanditiis est harum natus facere aliquam."
-   },
-   {
-      id: 6,
-      image: CarouselThree,
-      title: "Lorem ipsum dolor sit amet consectetur adipisicing elit",
-      des: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi quaerat ut porro cupiditate suscipit blanditiis est harum natus facere aliquam."
-   },
-]
-
-
+import { TfiAngleLeft, TfiAngleRight } from "react-icons/tfi";
+import { AiOutlineCalendar, AiOutlineUser } from "react-icons/ai";
+import { BiMessageRounded } from "react-icons/bi";
+import { carouselData } from '@/constant/data';
+import Link from 'next/link';
+import CustomImage from '../CustomImage';
 
 const Carousel = () => {
-   const [currentSlide, setCurrentSlide] = useState(0);
-   const [sliderData, setSliderData] = useState(carouselData);
-
-   const prevSlide = () => {
-      const isFirstSlide = currentSlide === 0;
-      const newIndex = isFirstSlide ? sliderData.length - 1 : currentSlide - 1;
-      setCurrentSlide(newIndex);
-   };
+   const [index, setIndex] = useState(0);
 
    const nextSlide = () => {
-      const isLastSlide = currentSlide === sliderData.length - 1;
-      const newIndex = isLastSlide ? 0 : currentSlide + 1;
-      setCurrentSlide(newIndex);
+      if (index === carouselData.length - 1) {
+         setIndex(0);
+      } else {
+         setIndex((pre) => pre + 1);
+      }
+   };
+   const prevSlide = () => {
+      if (index === 0) {
+         setIndex(carouselData.length - 1);
+      } else {
+         setIndex((pre) => pre - 1);
+      }
    };
 
-   const selectSlide = (index) => {
-      setCurrentSlide(index);
-   };
+   useEffect(() => {
+      const interval = setInterval(() => {
+         setIndex((pre) => (pre + 1) % carouselData.length);
+      }, 5000);
+
+      return () => {
+         clearInterval(interval);
+      };
+   }, [carouselData.length]);
+
+
+   const renderImageSlider = carouselData?.map((item, i) => {
+      return (
+         <div key={item.id}>
+            {/* <Image
+               src={item.img}
+               alt="Banner"
+               width={700}
+               height={700}
+               quality={50}
+               className={` transition-transform absolute duration-500 delay-200 w-full  h-full ${i === index ? "translate-x-0" : "translate-x-full"} hover:scale-125`}
+            /> */}
+            <CustomImage
+               src={item.img}
+               alt={`image`}
+               className={` transition-transform absolute duration-500 delay-200 w-full  h-full ${i === index ? "translate-x-0" : "translate-x-full"} hover:scale-125`}
+            />
+            <SliderImagesData
+               title={item.title}
+               author={item.author}
+               date={item.date}
+               comments={item.comments}
+               isActive={i === index}
+            />
+         </div >
+      );
+   })
 
    return (
-      <div className="w-full bg-white">
-         {sliderData?.map((slide, index) => (
-            <div key={slide.id} className={`${index === currentSlide ? 'block' : 'hidden'} relative`}>
-               <Image
-                  src={slide.image}
-                  width={1000}
-                  height={700}
-                  className='rounded-md shadow-md max-h-[35rem] overflow-hidden'
-                  alt='carousel'
-               />
-               <div className='absolute bottom-0 bg-opacity-20 bg-black w-full '>
-                  <button className='text-sm md:text-lg lg:text-2xl px-2 font-semibold text-white text-center opacity-75 '>
-                     {slide.title}
-                  </button>
-                  {/* <p className=' text-white text-center'>{slide.des}</p> */}
-               </div>
-               <div className='absolute flex justify-between transform -translate-y-1/2  left-0 right-0  top-1/2 z-10'>
-                  <button onClick={prevSlide} className="btn border-0 bg-transparent bg-opacity-20">❮</button>
-                  <button onClick={nextSlide} className="btn border-0 bg-transparent bg-opacity-20 ">❯</button>
-               </div>
-            </div>
-         ))}
-         <div className='hidden lg:flex overflow-x-auto lg:px-2 lg:flex-row space-x-10 py-2'>
-            {sliderData?.map((slide, index) => (
-               <div key={slide.id} className='flex-shrink-0'>
-                  <Image
-                     src={slide.image}
-                     width={180}
-                     height={100}
-                     alt='slider image'
-                     onClick={() => selectSlide(index)}
-                     className={`cursor-pointer ${index === currentSlide ? 'border-2 border-blue-500' : ''} max-w-[150px]`}
-                  />
-               </div>
-            ))}
+      <div className="relative w-full xl:py-0">
+         <div className="relative min-h-[14rem] sm:min-h-[20rem] md:min-h-[24rem] lg:min-h-[28rem] xl:min-h-[32rem] 2xl:min-h-[32rem] overflow-hidden ">
+            {renderImageSlider}
+            <SliderButton
+               prevSlide={prevSlide}
+               nextSlide={nextSlide}
+            />
          </div>
+
       </div>
    );
 };
 
 export default Carousel;
+
+const SliderImagesData = ({ title, author, comments, date, isActive }) => {
+
+   return (
+      <div className={` absolute inset-x-0  bottom-0  left-0 p-2 bg-black bg-opacity-30 ${isActive ? 'opacity-100' : 'opacity-0'}`}>
+         <h2 className=" text-white line-clamp-1 cursor-pointer z-30">
+            {title}
+         </h2>
+         <div className={` flex gap-4 mt-2 text-xs text-white`}>
+            <p className="icon-flex text-white">
+               <AiOutlineUser className="text-lg font-bold" />
+               {author}
+            </p>
+            <p className="icon-flex text-white">
+               <AiOutlineCalendar className="text-lg" />
+               {date}
+            </p>
+            <p className="icon-flex text-white">
+               <BiMessageRounded className="text-lg" />
+               {comments}
+            </p>
+         </div>
+      </div>
+   )
+}
+
+
+const SliderButton = ({ prevSlide, nextSlide }) => {
+
+   const carouselButton = 'bg-white  bg-opacity-10 w-6 h-6  xl:w-10 xl:h-10 flex items-center justify-center rounded-full cursor-pointer hover:bg-opacity-100'
+
+   return (
+      <div className="w-full h-full  absolute top-0 left-0 flex justify-between items-center px-1 ">
+         <button
+            className={`${carouselButton}`}
+            onClick={() => {
+               prevSlide();
+            }}
+         >
+            <TfiAngleLeft className="text-md xl:text-xl  font-bold " />
+         </button>
+         <button
+            className={`${carouselButton}`}
+            onClick={() => {
+               nextSlide();
+            }}
+         >
+            <TfiAngleRight className="text-md md:text-xl  font-bold " />
+         </button>
+      </div>
+   )
+}
+
 
 
